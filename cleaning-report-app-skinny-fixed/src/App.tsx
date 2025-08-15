@@ -360,7 +360,7 @@ export default function CleaningReportApp() {
     const filename = `Cleaning_Report_${r.staffName}_${r.date}.pdf`;
     try { pdf.save(filename); }
     catch {
-      const blobUrl = pdf.output("bloburl") as string;
+      const blobUrl = String(pdf.output("bloburl"));
       const a = document.createElement("a"); a.href = blobUrl; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
     }
@@ -442,7 +442,7 @@ export default function CleaningReportApp() {
   async function downloadInvoicePDF(id: number) {
     const inv = invoices.find(x=> x.id===id); if (!inv) return;
     const pdf = await buildInvoicePDF(inv); const filename = `Invoice_${inv.clientName}_${inv.date}.pdf`;
-    try { pdf.save(filename); } catch { const blobUrl = pdf.output("bloburl") as string; const a = document.createElement("a"); a.href = blobUrl; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(blobUrl), 5000); }
+    try { pdf.save(filename); } catch { const blobUrl = String(pdf.output("bloburl")); const a = document.createElement("a"); a.href = blobUrl; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(blobUrl), 5000); }
   }
 
   async function emailInvoicePDF(id: number) {
